@@ -10,7 +10,10 @@ const port = process.env.PORT || 5000;
 
 // adding midlleware
 app.use(express.json());
+// endpoint for contacts
 app.use("/api/contacts", require("./routes/contactRoutes"));
+//endpoint for users
+app.use("/api/users", require("./routes/userRoutes"));
 app.use(errorHandler)
 
 app.listen(port, () => {

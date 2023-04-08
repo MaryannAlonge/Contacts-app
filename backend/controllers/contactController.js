@@ -66,7 +66,16 @@ const Contact = require("../models/contactModel")
 //@route DELETE /api/contacts/:id
 //@access public
  const deleteContact = asyncHandler(async (req, res) => {
-  res.status(200).json({message: `Delete contact for ${req.params.id}`});
+  // to delte a contact we must first fetch the contact
+  const contact = await Contact.findById(req.params.id);
+  if(!contact){
+    res.status(404)
+    throw new Error("Contact not found");
+  }
+
+  //delete contact using the .remove() method
+ await Contact.remove()
+  res.status(200).json(contact);
 });
 
 
