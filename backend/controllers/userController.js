@@ -28,6 +28,13 @@ const user = await User.create({
 });
 
 console.log(`User created ${user}`)
+// when user is created
+if(user){
+  res.status(201).json({_id: user.id, email: user.email});
+} else{
+  res.status(400)
+  throw new Error("User data was not valid");
+}
   res.json({message: "Register the user"});
 });
 
