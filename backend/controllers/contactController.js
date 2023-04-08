@@ -6,8 +6,8 @@ const Contact = require("../models/contactModel")
 
  const getContacts = asyncHandler (async (req, res) => {
   // establish communication with DB using .find()
-  const contacts = Contact.find
-  res.status(200).json({message: 'Get all contacts'});
+  const contacts = await Contact.find()
+  res.status(200).json(contacts);
 });
 
 //@desc Create new contact
@@ -20,21 +20,46 @@ const Contact = require("../models/contactModel")
     res.status(400);
     throw new Error("All fields are mandatory!");
   }
-  res.status(200).json({message: 'Create contact'});
+  // if we have all the above and they're not empty, create contact using .create()
+  const contact = await Contact.create({
+    name,
+    email,
+    phone
+  })
+  res.status(201).json(contact);
 });
 
 //@desc Get ONE contact
 //@route GET /api/contacts/:id
 //@access public
  const getContact = asyncHandler(async (req, res) => {
-  res.status(200).json({message: `Get contact for ${req.params.id}`});
+  // find a single contact using the .findById() method
+  const contact = await Contact.findById(req.params.id);
+  if(!contact){
+    res.status(404)
+    throw new Error("Contact not found");
+  }
+  res.status(200).json(contact);
 });
 
 //@desc Update a contact
 //@route PUT /api/contacts/:id
 //@access public
  const updateContact = asyncHandler(async (req, res) => {
-  res.status(200).json({message: `Update contact for ${req.params.id}`});
+  // to update a contact we must first fetch the contact
+  const contact = await Contact.findById(req.params.id);
+  if(!contact){
+    res.status(404)
+    throw new Error("Contact not found");
+  }
+   // update contact using the .findByIdandUpdate method
+  const updatedContact = await Contact.findByIdAndUpdate(
+    req.params.id,
+    req.body,
+    // set the "new" query option as true
+    { new: true}
+    );
+  res.status(200).json(updatedContact);
 });
 
 //@desc Delete a contact
