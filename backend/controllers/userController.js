@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken");
 
 //@desc Register a User
 //@route POST /user/register
@@ -44,6 +45,11 @@ if(user){
 //@access public
 
 const loginUser = asyncHandler (async(req, res) => {
+  const { email, password} = req.body;
+  if(!email || !password){
+    res.status(400);
+    throw new Error("All fields are mandatory!")
+  }
   res.json({message: "Login the user"});
 });
 
