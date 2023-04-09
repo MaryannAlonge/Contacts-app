@@ -50,7 +50,29 @@ const loginUser = asyncHandler (async(req, res) => {
     res.status(400);
     throw new Error("All fields are mandatory!")
   }
-  res.json({message: "Login the user"});
+  // find user in database
+  const user = await User.findOne({email});
+  // compare password with hashedPassword
+  if(user && (await bcrypt.compare(password, user.password))) {
+    // create instance of accessToken
+    const accessToken = jwt.sign({
+      // specify things you want as payload in the token
+      user: {
+        username: user.username,
+        email: user.email,
+        id: user.id,
+      },
+      // provide accessToken seecret
+    }, process.env.ACCESS_TOKEN_SECRET,
+    // set expiration time for token
+    {expiresIn: "1m"}
+    );
+    res.status(200).json({accessToken});
+  } else {
+    res.status(401)
+    throw new Error("Invalid credentials")
+    
+  }
 });
 
 
