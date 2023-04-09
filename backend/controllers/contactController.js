@@ -12,7 +12,7 @@ const Contact = require("../models/contactModel")
 
 //@desc Create new contact
 //@route POST /api/contacts
-//@access public
+//@access private
  const createContact = asyncHandler(async (req, res) => {
   console.log("The request body is:", req.body);
   const {name, email, phone} = req.body;
@@ -31,7 +31,7 @@ const Contact = require("../models/contactModel")
 
 //@desc Get ONE contact
 //@route GET /api/contacts/:id
-//@access public
+//@access private
  const getContact = asyncHandler(async (req, res) => {
   // find a single contact using the .findById() method
   const contact = await Contact.findById(req.params.id);
@@ -44,7 +44,7 @@ const Contact = require("../models/contactModel")
 
 //@desc Update a contact
 //@route PUT /api/contacts/:id
-//@access public
+//@access private
  const updateContact = asyncHandler(async (req, res) => {
   // to update a contact we must first fetch the contact
   const contact = await Contact.findById(req.params.id);
@@ -64,7 +64,7 @@ const Contact = require("../models/contactModel")
 
 //@desc Delete a contact
 //@route DELETE /api/contacts/:id
-//@access public
+//@access private
  const deleteContact = asyncHandler(async (req, res) => {
   // to delte a contact we must first fetch the contact
   const contact = await Contact.findById(req.params.id);
