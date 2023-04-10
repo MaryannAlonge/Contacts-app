@@ -65,7 +65,7 @@ const loginUser = asyncHandler (async(req, res) => {
       // provide accessToken seecret
     }, process.env.ACCESS_TOKEN_SECRET,
     // set expiration time for token
-    {expiresIn: "1m"}
+    {expiresIn: "15m"}
     );
     res.status(200).json({accessToken});
   } else {
@@ -73,7 +73,7 @@ const loginUser = asyncHandler (async(req, res) => {
     throw new Error("Invalid credentials")
 
   }
-});
+}); 
 
 
 //@desc Get User Information
