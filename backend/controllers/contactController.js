@@ -24,7 +24,9 @@ const Contact = require("../models/contactModel")
   const contact = await Contact.create({
     name,
     email,
-    phone
+    phone,
+    // including the user id of who's creating the contact
+    user_id: req.user.id
   })
   res.status(201).json(contact);
 });
