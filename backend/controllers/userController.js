@@ -37,7 +37,7 @@ if(user){
   res.status(400)
   throw new Error("User data was not valid..");
 }
-  res.json({message: "Register the user"});
+  res.json({message: "User Successfully registered!"});
 });
 
 
