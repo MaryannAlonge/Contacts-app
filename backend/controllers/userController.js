@@ -71,7 +71,7 @@ const loginUser = asyncHandler (async(req, res) => {
     res.status(200).json({accessToken});
   } else {
     res.status(401)
-    throw new Error("Invalid credentials")
+    throw new Error("Invalid credentials!")
 
   }
 }); 
