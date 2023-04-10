@@ -86,7 +86,7 @@ const Contact = require("../models/contactModel")
     throw new Error("You do not have permission to delete other users' contacts")
   }
   //delete contact using the .remove() method
- await Contact.remove()
+ await Contact.deleteOne({_id: req.params.id})
   res.status(200).json(contact);
 });
 
