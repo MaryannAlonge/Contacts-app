@@ -25,6 +25,7 @@ console.log("Hashed password", hashedPassword)
 const user = await User.create({
   username,
   email,
+  // change to hashed password
   password: hashedPassword,
 });
 

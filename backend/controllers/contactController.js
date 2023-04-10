@@ -54,6 +54,11 @@ const Contact = require("../models/contactModel")
     res.status(404)
     throw new Error("Contact not found");
   }
+// making sure users are only updating contacts created by them
+  if(contact.user_id.toString() == req.user.id) {
+    res.status(403);
+    throw new Error("You do not have permission to update other users' contacts")
+  }
    // update contact using the .findByIdandUpdate method
   const updatedContact = await Contact.findByIdAndUpdate(
     req.params.id,
