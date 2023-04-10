@@ -80,6 +80,11 @@ const Contact = require("../models/contactModel")
     throw new Error("Contact not found");
   }
 
+  // making sure users are only deleting contacts created by them
+  if(contact.user_id.toString() == req.user.id) {
+    res.status(403);
+    throw new Error("You do not have permission to delete other users' contacts")
+  }
   //delete contact using the .remove() method
  await Contact.remove()
   res.status(200).json(contact);
